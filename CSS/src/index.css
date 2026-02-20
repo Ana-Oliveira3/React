@@ -1,0 +1,19 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+  padding-bottom: 500px;
+}
+
+h1{
+  color: red;
+}
+
+.red-title{
+  color: white;
+  background-color: black;
+  font-size: 40px;
+}
