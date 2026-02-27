@@ -1,50 +1,56 @@
-import './App.css'
-import ImcTable from './Components/imcTable.jsx';
-import ImcCalc from './Components/imcCalc.jsx';
-import { data } from './data/data';
+import './App.css';
+import OrcamentoTable from './Components/OrcamentoTable.jsx';
+import OrcamentoCalc from './Components/OrcamentoCalc.jsx';
+import { data } from './data/projetoData';
 import { useState } from 'react';
 
 function App() {
 
-  const [imc, setImc] = useState("");
-  const [info, setInfo] = useState("");
-  const [infoClass, setInfoClass] = useState("");
+  const [total, setTotal] = useState("");
+  const [category, setCategory] = useState("");
+  const [complexityClass, setComplexityClass] = useState("");
 
-  const calcImc = (e, height, weight) => {
+  const calcBudget = (e, rate, hours, urgent) => {
     e.preventDefault();
+    if (!rate || !hours) return;
 
-    if (!weight || !height) return;
+    const rateFloat = +rate.replace(",", "");
+    const hoursFloat = +hours.replace(",", "");
 
-    const weigthFloat = +weight.replace(",", "");
-    const heightFloat = +height.replace(",", "");
+    let budget = rateFloat * hoursFloat;
+    if (urgent) budget *= 1.2; // 20% extra for urgency
+    budget = budget.toFixed(2);
 
-    const imcResult = (weigthFloat / (heightFloat * heightFloat)).toFixed(2);
-
-    setImc(imcResult);
+    setTotal(budget);
 
     data.forEach((item) => {
-      if (imcResult >= item.min && imcResult <= item.max) {
-        setInfo(item.info);
-        setInfoClass(item.infoClass);
+      if (budget >= item.min && budget <= item.max) {
+        setCategory(item.classification);
+        setComplexityClass(item.infoClass);
       }
-    })
+    });
+  };
 
-    if (!info) return;
-
-  }
-
-  const resetCalc = (e) => {
-    setImc("");
-    setInfo("");
-    setInfoClass("");
-  }
+  const resetCalc = () => {
+    setTotal("");
+    setCategory("");
+    setComplexityClass("");
+  };
 
   return (
     <div className="container">
-      {/* <h1>IMC</h1> */}
-      {!imc ? (<ImcCalc calcImc={calcImc} />) : <ImcTable data={data} imc={imc} info={info} infoClass={infoClass} resetCalc={resetCalc} />}
+      {!total ? (
+        <OrcamentoCalc calcBudget={calcBudget} />
+      ) : (
+        <OrcamentoTable
+          total={total}
+          category={category}
+          complexityClass={complexityClass}
+          resetCalc={resetCalc}
+        />
+      )}
     </div>
-  )
+  );
 }
 
 export default App

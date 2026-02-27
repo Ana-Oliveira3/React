@@ -1,0 +1,34 @@
+#result-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+#total-value {
+    font-size: 2.4rem;
+    margin-bottom: 0.6rem;
+}
+
+#project-category,
+#complexity {
+    font-size: 1.2rem;
+    color: white;
+    margin: 0.3rem 0;
+}
+
+#back-btn {
+    align-self: center;
+    margin-top: 1rem;
+}
+
+.low {
+    color: #dbce12;
+}
+
+.medium {
+    color: #db6116;
+}
+
+.high {
+    color: #db1912;
+}
